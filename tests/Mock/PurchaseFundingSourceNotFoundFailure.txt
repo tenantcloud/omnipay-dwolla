@@ -1,0 +1,13 @@
+HTTP/1.1 400
+status: 400
+date: Fri, 05 Oct 2018 08:31:51 GMT
+content-type: application/vnd.dwolla.v1.hal+json; profile="http://nocarrier.co.uk/profiles/vnd.error/"
+content-length: 233
+connection: keep-alive
+access-control-allow-origin: *
+x-request-id: a4237400-225f-4aef-8e11-2c1522dc895c
+expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+server: cloudflare
+cf-ray: 464e88a62e228b4c-KBP
+
+{"code":"ValidationError","message":"Validation error(s) present. See embedded errors list for more details.","_embedded":{"errors":[{"code":"Invalid","message":"Funding source not found.","path":"/_links/source/href","_links":{}}]}}

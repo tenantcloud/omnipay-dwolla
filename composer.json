@@ -1,0 +1,40 @@
+{
+    "name": "tenantcloud/omnipay-dwolla",
+    "type": "library",
+    "description": "Dwolla v2 support for the Omnipay payment library",
+    "keywords": [
+        "acquiring",
+        "gateway",
+        "omnipay",
+        "payment",
+        "dwolla",
+        "api"
+    ],
+    "homepage": "https://github.com/tenantcloud/omnipay-dwolla",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maksym Bilozub",
+            "email": "mbilozub@tenantcloud.com",
+            "homepage": "https://www.tenantcloud.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.1.0",
+        "omnipay/common": "^3"
+    },
+    "require-dev": {
+        "omnipay/tests": "^3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Omnipay\\Dwolla\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Omnipay\\Dwolla\\": "tests"
+        }
+    },
+    "prefer-stable": true
+}

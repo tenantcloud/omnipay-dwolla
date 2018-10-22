@@ -1,0 +1,13 @@
+HTTP/1.1 400
+status: 400
+date: Fri, 05 Oct 2018 08:44:40 GMT
+content-type: application/vnd.dwolla.v1.hal+json; profile="http://nocarrier.co.uk/profiles/vnd.error/"
+content-length: 247
+connection: keep-alive
+access-control-allow-origin: *
+x-request-id: e215ef4b-2208-4cb9-9269-95bdf156aa00
+expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+server: cloudflare
+cf-ray: 464e9b8ccae88b04-KBP
+
+{"code":"ValidationError","message":"Validation error(s) present. See embedded errors list for more details.","_embedded":{"errors":[{"code":"Invalid","message":"Metadata not supported for this type of transfer.","path":"/metadata","_links":{}}]}}

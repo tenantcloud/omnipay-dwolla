@@ -1,0 +1,11 @@
+HTTP/1.1 201
+status: 201
+date: Fri, 05 Oct 2018 07:23:39 GMT
+content-type: application/vnd.dwolla.v1.hal+json
+content-length: 0
+connection: keep-alive
+location: https://api-sandbox.dwolla.com/transfers/186ed991-6fc8-e811-8110-d08b405a9c82
+x-request-id: 3705ee9b-dea8-4b1f-be2a-f5e77cfe299f
+expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+server: cloudflare
+cf-ray: 464e24d95fec8b58-KBP

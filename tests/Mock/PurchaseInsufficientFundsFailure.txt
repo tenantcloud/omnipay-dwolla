@@ -1,0 +1,13 @@
+HTTP/1.1 400
+status: 400
+date: Fri, 05 Oct 2018 08:42:43 GMT
+content-type: application/vnd.dwolla.v1.hal+json; profile="http://nocarrier.co.uk/profiles/vnd.error/"
+content-length: 237
+connection: keep-alive
+access-control-allow-origin: *
+x-request-id: 9d57665e-6d66-4540-b33a-22e402bccbfb
+expect-ct: max-age=604800, report-uri="https://report-uri.cloudflare.com/cdn-cgi/beacon/expect-ct"
+server: cloudflare
+cf-ray: 464e98aeda468b04-KBP
+
+{"code":"ValidationError","message":"Validation error(s) present. See embedded errors list for more details.","_embedded":{"errors":[{"code":"InsufficientFunds","message":"Insufficient funds.","path":"/_links/source/href","_links":{}}]}}
