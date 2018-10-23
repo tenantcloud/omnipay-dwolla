@@ -2,7 +2,7 @@
 
 **Dwolla v2 gateway support for the Omnipay PHP payment processing library**
 
-[![Build Status](https://travis-ci.org/Dwolla/omnipay-dwolla.svg)](https://travis-ci.org/Dwolla/omnipay-dwolla)
+[![Build Status](https://travis-ci.org/tenantcloud/omnipay-dwolla.svg?branch=master)](https://travis-ci.org/tenantcloud/omnipay-dwolla)
 
 [Omnipay](https://github.com/omnipay/omnipay) is a framework agnostic, multi-gateway payment
 processing library for PHP 5.3+. This package implements Dwolla support for Omnipay.
