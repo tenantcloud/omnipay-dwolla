@@ -28,7 +28,9 @@ class PurchaseRequestTest extends TestCase
             'metadata' => [
                 'checkoutId' => '2346778'
             ],
-            'clearing' => 'standard'
+            'clearing' => [
+            	'source' => 'standard'
+			]
         ]);
     }
 

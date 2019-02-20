@@ -23,7 +23,10 @@ class GatewayTest extends GatewayTestCase
         $request = $this->gateway->purchase([
             'amount' => '5.00',
             'sourceId' => 'c70a7dde-c9b8-42cc-ba51-612908434eb4',
-            'destinationId' => 'cf3415ec-8286-4e4f-b280-250074244544'
+            'destinationId' => 'cf3415ec-8286-4e4f-b280-250074244544',
+			'clearing' => [
+				'source' => 'standard'
+			]
         ]);
 
         $data = $request->getData();
@@ -53,6 +56,9 @@ class GatewayTest extends GatewayTestCase
             'destinationId' => 'cf3415ec-8286-4e4f-b280-250074244544',
             'destinationType' => 'funding-sources',
             'correlationId' => 'testId',
+			'clearing' => [
+				'source' => 'standard'
+			],
             'metadata' => ['a1' => 'a2'],
             'fees' => ['b1' => 'b2'],
             'achDetails' => ['c1' => 'c2'],
@@ -83,13 +89,22 @@ class GatewayTest extends GatewayTestCase
             'massPayments' => [
                 [
                     'destinationId' => 'cf3415ec-8286-4e4f-b280-250074244544',
-                    'amount' => '1.00'
+                    'amount' => '1.00',
+					'clearing' => [
+						'source' => 'standard'
+					]
                 ],
                 [
                     'destinationId' => 'f7fdf7b2-ebdb-479f-9db9-1fd3dd92a094',
-                    'amount' => '2.00'
+                    'amount' => '2.00',
+					'clearing' => [
+						'source' => 'standard'
+					]
                 ]
-            ]
+            ],
+			'clearing' => [
+				'source' => 'standard'
+			]
 
         ]);
 
@@ -107,7 +122,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertArrayNotHasKey('achDetails', $data);
         $this->assertArrayNotHasKey('correlationId', $data);
 
-        $this->assertSame('standard', $request->getClearing());
+        $this->assertSame('standard', $data['clearing']['source']);
         $this->assertSame('c70a7dde-c9b8-42cc-ba51-612908434eb4', $request->getSourceId());
         $this->assertTrue(is_array($request->getMassPayments()));
 
@@ -116,9 +131,64 @@ class GatewayTest extends GatewayTestCase
             $this->assertArrayNotHasKey('source', $item['_links']);
             $this->assertContains($expected['destinationId'], $item['_links']['destination']['href']);
             $this->assertSame($expected['amount'], $item['amount']['value']);
-            $this->assertSame($request->getClearing(), $item['clearing']['source']);
+            $this->assertSame('standard', $item['clearing']['source']);
         }
     }
+
+	public function testTransferNoClearingPurchaseSuccess()
+	{
+		$request = $this->gateway->purchase([
+			'amount' => '5.00',
+			'sourceId' => 'c70a7dde-c9b8-42cc-ba51-612908434eb4',
+			'destinationId' => 'cf3415ec-8286-4e4f-b280-250074244544'
+		]);
+
+		$data = $request->getData();
+
+		$this->assertInstanceOf('Omnipay\Dwolla\Message\PurchaseRequest', $request);
+		$this->assertArrayHasKey('_links', $data);
+		$this->assertArrayHasKey('amount', $data);
+		$this->assertArrayNotHasKey('clearing', $data);
+		$this->assertArrayNotHasKey('sourceType', $data);
+		$this->assertArrayNotHasKey('destinationType', $data);
+	}
+
+	public function testMassPaymentNoClearingPurchaseSuccess()
+	{
+		$request = $this->gateway->purchase([
+			'sourceId' => 'c70a7dde-c9b8-42cc-ba51-612908434eb4',
+			'massPayments' => [
+				[
+					'destinationId' => 'cf3415ec-8286-4e4f-b280-250074244544',
+					'amount' => '1.00'
+				],
+				[
+					'destinationId' => 'f7fdf7b2-ebdb-479f-9db9-1fd3dd92a094',
+					'amount' => '2.00'
+				]
+			]
+		]);
+
+		$data = $request->getData();
+
+		$this->assertInstanceOf('Omnipay\Dwolla\Message\PurchaseRequest', $request);
+		$this->assertArrayHasKey('_links', $data);
+		$this->assertArrayHasKey('items', $data);
+		$this->assertArrayNotHasKey('clearing', $data);
+		$this->assertArrayNotHasKey('sourceType', $data);
+		$this->assertArrayNotHasKey('destinationId', $data);
+		$this->assertArrayNotHasKey('destinationType', $data);
+
+		$this->assertTrue(is_array($request->getMassPayments()));
+
+		foreach ($data['items'] as $i => $item) {
+			$expected = $request->getMassPayments()[$i];
+			$this->assertArrayNotHasKey('source', $item['_links']);
+			$this->assertContains($expected['destinationId'], $item['_links']['destination']['href']);
+			$this->assertSame($expected['amount'], $item['amount']['value']);
+			$this->assertArrayNotHasKey('clearing', $item);
+		}
+	}
 
     public function testMassPaymentEmptyAmountPurchaseFailed()
     {
@@ -163,17 +233,25 @@ class GatewayTest extends GatewayTestCase
                     'destinationType' => 'funding-sources',
                     'metadata' => ['d1' => 'd2'],
                     'amount' => '1.00',
-                    'correlationId' => 'testId2'
+                    'correlationId' => 'testId2',
+					'clearing' => [
+						'source' => 'standard'
+					]
                 ],
                 [
                     'destinationType' => 'funding-sources',
                     'destinationId' => 'cf3415ec-8286-4e4f-b280-250074244544',
                     'metadata' => ['e1' => 'e2'],
                     'amount' => '2.00',
-                    'correlationId' => 'testId3'
+                    'correlationId' => 'testId3',
+					'clearing' => [
+						'source' => 'standard'
+					]
                 ]
-            ]
-
+            ],
+			'clearing' => [
+				'source' => 'standard'
+			]
         ]);
 
         $data = $request->getData();
@@ -188,7 +266,7 @@ class GatewayTest extends GatewayTestCase
         $this->assertArrayHasKey('correlationId', $data);
 
         $this->assertTrue(count($data['_links']) === 1);
-        $this->assertSame('standard', $request->getClearing());
+        $this->assertSame('standard', $data['clearing']['source']);
         $this->assertSame('c70a7dde-c9b8-42cc-ba51-612908434eb4', $request->getSourceId());
         $this->assertSame('customers', $request->getSourceType());
         $this->assertArraySubset(['a1' => 'a2'], $request->getMetadata());
@@ -203,7 +281,7 @@ class GatewayTest extends GatewayTestCase
             $this->assertArrayNotHasKey('source', $item['_links']);
             $this->assertContains($expected['destinationId'], $item['_links']['destination']['href']);
             $this->assertSame($expected['amount'], $item['amount']['value']);
-            $this->assertSame($request->getClearing(), $item['clearing']['source']);
+            $this->assertSame('standard', $item['clearing']['source']);
         }
     }
 }

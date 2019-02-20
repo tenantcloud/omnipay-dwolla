@@ -52,11 +52,13 @@ class PurchaseRequest extends AbstractRequest
             'amount' => [
                 'currency' => 'USD',
                 'value' => $this->getAmount()
-            ],
-            'clearing' => [
-                'source' => $this->getClearing()
             ]
         ];
+
+        $clearing = $this->getClearing();
+        if (!is_null($clearing)) {
+			$data['clearing'] = $clearing;
+		}
 
         $metadata = $this->getMetadata();
         if (!is_null($metadata)) {
@@ -112,11 +114,13 @@ class PurchaseRequest extends AbstractRequest
                 'amount' => [
                     'currency' => 'USD',
                     'value' => $amount
-                ],
-                'clearing' => [
-                    'source' => $this->getClearing()
                 ]
             ];
+
+			$clearing = $this->getClearing();
+			if (!is_null($clearing)) {
+				$item['clearing'] = $clearing;
+			}
 
             $metadata = $payment['metadata'] ?? null;
             if (!is_null($metadata)) {
@@ -137,11 +141,13 @@ class PurchaseRequest extends AbstractRequest
                     'href' => $this->getHost() . '/' . $this->getSourceType() . '/' . $this->getSourceId(),
                 ]
             ],
-            'items' => $items,
-            'clearing' => [
-                'source' => $this->getClearing()
-            ]
+            'items' => $items
         ];
+
+		$clearing = $this->getClearing();
+		if (!is_null($clearing)) {
+			$data['clearing'] = $clearing;
+		}
 
         $metadata = $this->getMetadata();
         if (!is_null($metadata)) {

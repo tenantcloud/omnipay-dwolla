@@ -11,8 +11,6 @@ trait GetterSetterTrait
     public $host = 'https://api.dwolla.com';
     public $sandbox_host = 'https://api-sandbox.dwolla.com';
 
-    public $clearing = 'standard';
-
     public $endpointTransfers = '/transfers';
     public $endpointMassPayments = '/mass-payments';
 
@@ -121,7 +119,7 @@ trait GetterSetterTrait
 
     public function getClearing()
     {
-        return $this->getParameter('clearing') ?? $this->clearing;
+        return $this->getParameter('clearing');
     }
 
     public function setClearing($value)

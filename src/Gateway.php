@@ -37,7 +37,7 @@ class Gateway extends AbstractGateway
             'fees' => null,
             'correlationId' => null,
             'achDetails' => null,
-            'clearing' => 'standard',
+            'clearing' => null,
             'massPayments' => null,
         ];
     }
