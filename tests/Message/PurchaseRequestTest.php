@@ -74,6 +74,8 @@ class PurchaseRequestTest extends TestCase
         $this->assertSame(null, $response->getMessage());
         $this->assertSame('7838cba4-2510-4efa-8f19-a9700140fb03',
             $response->getTransactionReference());
+        $this->assertNull($response->getData()['headers']);
+        $this->assertNull($response->getData()['rawContents']);
     }
 
     public function testSendAmountFailure()
@@ -171,6 +173,8 @@ class PurchaseRequestTest extends TestCase
         $this->assertFalse($response->isSuccessful());
         $this->assertTrue($response->getCode() >= 400);
         $this->assertSame('Ooops! Service is not available.', $response->getMessage());
+        $this->assertNotNull($response->getData()['headers']);
+        $this->assertNotEmpty($response->getData()['rawContents']);
         $this->assertNull($response->getTransactionReference());
     }
 }

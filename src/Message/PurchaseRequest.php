@@ -189,7 +189,9 @@ class PurchaseRequest extends AbstractRequest
             'referenceId' => null,
             'massPayment' => $this->isMassPayment(),
             'message' => null,
-            'errors' => null
+            'errors' => null,
+            'headers' => null,
+            'rawContents' => null,
         ];
         switch ($statusCode) {
             case 201:
@@ -216,9 +218,13 @@ class PurchaseRequest extends AbstractRequest
      */
     private function parseErrorResponse($httpResponse, $response): array
     {
-        $errorResponse = json_decode($httpResponse->getBody()->getContents(), true);
+        $contents = $httpResponse->getBody()->getContents();
 
         $response['message'] = 'Ooops! Service is not available.';
+        $response['headers'] = $httpResponse->getHeaders();
+        $response['rawContents'] = $contents;
+
+        $errorResponse = json_decode($contents, true);
 
         if (!$errorResponse || !is_array($errorResponse) || !array_key_exists('code', $errorResponse)) {
             return $response;
