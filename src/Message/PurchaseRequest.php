@@ -196,7 +196,7 @@ class PurchaseRequest extends AbstractRequest
         switch ($statusCode) {
             case 201:
                 $ref = $httpResponse->getHeader('location');
-                if ($ref && is_array($ref) && count($ref)) {
+                if ($ref && is_array($ref)) {
                     $response['success'] = true;
                     $response['referenceId'] = reset($ref);
                 }

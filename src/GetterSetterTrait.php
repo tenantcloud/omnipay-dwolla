@@ -34,7 +34,7 @@ trait GetterSetterTrait
 
     public function isMassPayment(): bool
     {
-        return (bool)count($this->getMassPayments());
+        return (bool) $this->getMassPayments();
     }
 
     public function getAppToken()
